@@ -28,6 +28,8 @@ handleClick = () =>{
     )
   }
 }
+
+
 const mapStateToProps = (state, ownProps) =>{
     let id = ownProps.match.params.post_id;
     return {
@@ -36,7 +38,8 @@ const mapStateToProps = (state, ownProps) =>{
 }
 const mapDispatchToProps = (dispatch) =>{
     return {
-       deletePost: (id) => dispatch(deletePost(id))
+        deletePost: (id) => dispatch(deletePost(id))
     }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(Post)
+const connector = connect(mapStateToProps, mapDispatchToProps)
+export default connector(Post)

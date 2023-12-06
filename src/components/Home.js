@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import axios from 'axios'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import Pokeball from '../pokeball.png'
@@ -33,10 +32,12 @@ class Home extends Component {
   }
 }
 
+
 const mapStateToProps = (state) =>{
   return {
     posts: state.posts
   }
 }
+const connector = connect(mapStateToProps)
 
-export default connect(mapStateToProps)(Home)
+export default connector(Home)

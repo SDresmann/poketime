@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
 import Navbar from './components/Navbar'
 import Home from './components/Home'
@@ -13,12 +13,12 @@ import Post from './components/Post'
       <BrowserRouter>
       <div className='app'>
       <Navbar />
-      <Switch>
-      <Route exact path='/' component={Home} />
-      <Route path='/about' component={About} />
-      <Route path='/contact' component={Contact} />
-      <Route path='/:post_id' component={Post}/>
-      </Switch>
+      <Routes>
+      <Route exact path='/' element={<Home/>} />
+      <Route path='/about' element={<About/>} />
+      <Route path='/contact' element={<Contact/>} />
+      <Route path='/:post_id' element={<Post/>}/>
+      </Routes>
       </div>
       </BrowserRouter>
     )
