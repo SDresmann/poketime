@@ -1,45 +1,42 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-
+import React from 'react';
+import { connect } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import { deletePost } from '../actions/postActions';
 
- class Post extends Component {
-handleClick = () =>{
-    this.props.deletePost(this.props.post.id);
-    this.props.history.push('/');
-}
-  render() {
-    console.log(this.props)
-    const post = this.props.post ? (
-        <div className="post">
-            <h4 className="center">{this.props.post.title}</h4>
-            <p>{this.props.post.body}</p>
-            <div className="center">
-                <button className="btn grey" onClick={this.handleClick}>Delete Post</button>
-            </div>
-        </div>
-    ) : (
-        <div className="center">Loading Post...</div>
-    )
-    return (
-      <div className='container'>
-      {post}
-      </div>
-    )
+const Post = ({ posts, deletePost }) => {
+  const { postId } = useParams();
+
+  // Find the post with the matching postId
+  const post = posts.find(post => post.id === postId);
+
+  // Check if the post is found
+  if (!post) {
+    return <div>Post not found</div>;
   }
-}
+
+  return (
+    <div className="container">
+      <h2>{post.title}</h2>
+      <p>{post.body}</p>
 
 
-const mapStateToProps = (state, ownProps) =>{
-    let id = ownProps.match.params.post_id;
-    return {
-        post: state.posts.find(post => post.id === id)
-    }
-}
-const mapDispatchToProps = (dispatch) =>{
-    return {
-        deletePost: (id) => dispatch(deletePost(id))
-    }
-}
-const connector = connect(mapStateToProps, mapDispatchToProps)
-export default connector(Post)
+      <button className='btn' style={{backgroundColor: 'red'}} onClick={() => deletePost(post.id)}>Delete Post</button>
+    </div>
+  );
+};
+
+const mapStateToProps = (state) => {
+  return {
+    posts: state.posts,
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    deletePost: id => dispatch(deletePost(id)),
+  };
+};
+
+const ConnectedPost = connect(mapStateToProps, mapDispatchToProps)(Post);
+
+export default ConnectedPost;
